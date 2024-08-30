@@ -1,4 +1,4 @@
-local cx = game:GetService("ContentProvider")
+		local cx = game:GetService("ContentProvider")
 local PAsync = cx.PreloadAsync
 local lp = game:GetService("Players").LocalPlayer
 if not hookfunction then
@@ -1742,14 +1742,16 @@ local Highestpwrmode = false
 	local start = Player.Character.Head.Position
 
 
-	local namecall;
-	namecall = hookmetamethod(game, "__namecall", function(self, ...)
+	local n;
+	n = hookmetamethod(game, "__namecall", function(self, ...)
 		local a = {...}
 		local nm = getnamecallmethod()
 
 		if a[1] == "Clicked" and state then
-			local nwArgs = {"Clicked", start, start + ThrowingTab.Direction * 10000, (game.PlaceId == 8206123457  and ThrowingTab.Power) or a[4], ThrowingTab.Power}
+			local ArgsNew = {"Clicked", start, start + ThrowingTab.Direction * 10000, (game.PlaceId == 8206123457  and ThrowingTab.Power) or a[4], ThrowingTab.Power}
+			return n(self, unpack(ArgsNew))
 		end
+		return n(self, ...)
 	end)
 
 
