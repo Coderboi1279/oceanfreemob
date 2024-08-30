@@ -1,4 +1,4 @@
-		local cx = game:GetService("ContentProvider")
+local cx = game:GetService("ContentProvider")
 local PAsync = cx.PreloadAsync
 local lp = game:GetService("Players").LocalPlayer
 if not hookfunction then
@@ -1735,7 +1735,7 @@ local Highestpwrmode = false
 								throwingpar.Anchored = false
 	game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
 		if game.PlaceId ~= 8206123457 then
-			if input.KeyCode == Enum.KeyCode.ButtonR2 and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Message.Text == "HIKE" and game:GetService("ReplicatedStorage").Values.Status.Value == "InPlay" and game:GetService("ReplicatedStorage").Values.Throwable and not gameProcessedEvent then
+			if input.KeyCode == Enum.KeyCode.ButtonR2 or input.UserInputType == Enum.UserInputType.Touch and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Message.Text == "HIKE" and game:GetService("ReplicatedStorage").Values.Status.Value == "InPlay" and game:GetService("ReplicatedStorage").Values.Throwable and not gameProcessedEvent then
 					if Char then
 						local Football = Char:FindFirstChildOfClass("Tool")
 						if Football then
@@ -1865,7 +1865,7 @@ local Highestpwrmode = false
 					end
 				end
 			elseif game.PlaceId == 8206123457 then
-				if input.KeyCode == Enum.KeyCode.ButtonR2 and not gameProcessedEvent then
+				if input.KeyCode == Enum.KeyCode.ButtonR2 or input.UserInputType == Enum.UserInputType.Touch and not gameProcessedEvent then
 					if Char then
 						local Football = Char:FindFirstChildOfClass("Tool")
 						if Football then
