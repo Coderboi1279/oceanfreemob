@@ -1904,7 +1904,7 @@ local Highestpwrmode = false
 					local startAdjusted = Start + (ThrowingTab.Direction * 5) -- // this is the beginning offsets on the server // --
 					
 			  
-					local curve0, curve1, cf0, cf1 = beamProjectile(Vector3.new(0, -FF2Grav, 0), POWAA * ThrowingTab.Direction, Start + (ThrowingTab.Direction * 5), TOF)
+					local curve0, curve1, cf0, cf1 = beamProjectile(Vector3.new(0, -FF2Grav, 0), ThrowingTab.Power * ThrowingTab.Direction, Start + (ThrowingTab.Direction * 5), TOF)
 					
 					beam.CurveSize0 = curve0
 					beam.CurveSize1 = curve1
