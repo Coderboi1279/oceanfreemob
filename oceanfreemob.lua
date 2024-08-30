@@ -1725,8 +1725,7 @@ local Highestpwrmode = false
 	end
 	
 	local ThrowingTab = {
-		Direction = Vector3.new(0, 0, 0),
-		Power = 60
+		Direction = Vector3.new(0, 0, 0)
 	}
 	local throwingpar = Instance.new("Part")
 	local Highestpwrmode = false
@@ -1734,30 +1733,283 @@ local Highestpwrmode = false
 								throwingpar.Size = Vector3.new(1.2, 2, 1.2)
 								throwingpar.Color = Color3.fromRGB(0, 0, 0)
 								throwingpar.Anchored = false
-	
+	game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
+		if game.PlaceId ~= 8206123457 then
+			if input.KeyCode == Enum.KeyCode.ButtonR2 and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.Message.Text == "HIKE" and game:GetService("ReplicatedStorage").Values.Status.Value == "InPlay" and game:GetService("ReplicatedStorage").Values.Throwable and not gameProcessedEvent then
+					if Char then
+						local Football = Char:FindFirstChildOfClass("Tool")
+						if Football then
+							if state == true then
+								if state == false then return end
+								local start = Player.Character:FindFirstChild("Head").Position
+								if not isLocked then
+									if autoswr then
+										ClosestPlr = getMostIsolatedPlayer(20)
+									else
+										local nearestPlayer = getNearestPlayerToMouse()
+										if nearestPlayer and nearestPlayer:IsA("Player") then
+											ClosestPlr = nearestPlayer
+										end
+									end
+								end
+								
+								if isLocked and not ClosestPlr then
+									if autoswr then
+										if getMostIsolatedPlayer(20) == nil then
+											ClosestPlr = ClosestPlr
+										else
+											ClosestPlr = getMostIsolatedPlayer(20)
+										end
+									else
+										if getNearestPlayerToMouse() == nil then
+											ClosestPlr = ClosestPlr
+										else
+											ClosestPlr = getNearestPlayerToMouse()
+										end 
+									end
+								end
+								local Initial = 95
+								local Throwtype;
+									
+							
+									Throwtype = getThrowType()
+							
+								local vel;
+								local toThrowToDirection;
+								local pow;
+
+
+								local WhichOne2;
+								if Throwtype == "Fade" then
+									WhichOne2 = Data.FadeModeAngle
+								elseif Throwtype == "Bullet" then
+									WhichOne2 = Data.BulletModeAngle
+								else
+									WhichOne2 = Data.Angle
+								end
+
+								if Highestpwrmode then
+									Initial = 95
+								else
+									if AutoPowa then
+										if pow then
+										Initial = pow
+									else
+										 Initial = 95
+									end
+								else
+									Initial = Data.NormalPower
+								end
+							end
+		
+								local toLaunchAnlge;
+								if Highestpwrmode then
+									if AutoAngie then
+										toLaunchAnlge = HighSpeedLowAngleCalcs(FF2Grav, Initial)
+									else
+										toLaunchAnlge = math.rad(WhichOne2)
+									end
+								else
+									if AutoAngie then
+										if Throwtype == "Fade" then
+											toLaunchAnlge = math.rad(75)
+										elseif Throwtype == "Bullet" then
+											toLaunchAnlge = clampnum(HighSpeedLowAngleCalcs(FF2Grav, Initial), 0, 0.296706)
+										else
+											toLaunchAnlge = clampnum(calculateLaunchAngle(FF2Grav, Initial), 0, 0.975)
+										end
+									else
+										toLaunchAnlge = math.rad(WhichOne2)
+									end
+								end
+								local TOF = GetTimeOfFlightProjectile(Initial, toLaunchAnlge, FF2Grav)
+								local YesEnd;
+								if string.find(ClosestPlr.name, "bot 1") or string.find(ClosestPlr.name, "bot 3") then
+									YesEnd = KeepPosInBounds(BotEstimatedVel(TOF, ClosestPlr), 70.5, 175.5)
+								elseif not string.find(ClosestPlr.name, "bot 1") or not string.find(ClosestPlr.name, "bot 3") then
+									YesEnd = KeepPosInBounds(GetTargetPositionForWR(TOF, ClosestPlr), 70.5, 175.5)
+								end
+								local PowerSir;
+								 vel, toThrowToDirection, pow = OverallVelocityNeededToReachAPosition(toLaunchAnlge, start, YesEnd, Vector3.new(0,-FF2Grav,0), TOF)  
+								if AutoPowa then
+									if Throwtype == "Fade" then
+										PowerSir = 95
+									elseif Throwtype == "Bullet" then
+										PowerSir = clampnum(pow, 90, 95)
+									else
+										PowerSir = pow
+									end
+								else
+									PowerSir = Data.NormalPower
+								end
+								local neworigin = start + (ThrowingTab.Direction * 5)
+
+								local RemoteEvent = Football.Handle:FindFirstChild("RemoteEvent")
+								if RemoteEvent then
+									local ThrowAnimation = Char.Humanoid:LoadAnimation(game:GetService("ReplicatedStorage").Animations.Throw)
+									ThrowAnimation.Name = "Throw"
+									ThrowAnimation:Play()
+									RemoteEvent:fireServer("Clicked", start, neworigin + ThrowingTab.Direction * 10000, (game.PlaceId == 8206123457 and PowerSir) or 95, PowerSir)
+									
+								else
+							   
+								end 
+							else
+
+							end
+						else
+		   
+						end
+					else
+				   
+					end
+				end
+			elseif game.PlaceId == 8206123457 then
+				if input.KeyCode == Enum.KeyCode.ButtonR2 and not gameProcessedEvent then
+					if Char then
+						local Football = Char:FindFirstChildOfClass("Tool")
+						if Football then
+							if state == true then
+								if state == false then return end
+								local start = Player.Character:FindFirstChild("Head").Position
+								if not isLocked then
+									if autoswr then
+										ClosestPlr = getMostIsolatedPlayer(20)
+									else
+										local nearestPlayer = getNearestPlayerToMouse()
+										if nearestPlayer and nearestPlayer:IsA("Player") then
+											ClosestPlr = nearestPlayer
+										end
+									end
+								end
+								
+								if isLocked and not ClosestPlr then
+									if autoswr then
+										if getMostIsolatedPlayer(20) == nil then
+											ClosestPlr = ClosestPlr
+										else
+											ClosestPlr = getMostIsolatedPlayer(20)
+										end
+									else
+										if getNearestPlayerToMouse() == nil then
+											ClosestPlr = ClosestPlr
+										else
+											ClosestPlr = getNearestPlayerToMouse()
+										end 
+									end
+								end
+								local Initial = 95
+								local Throwtype;
+									local Throwtype = getThrowType()
+								
+							  
+								local vel;
+								local toThrowToDirection;
+								local pow;
+
+								local WhichOne2;
+								if Throwtype == "Fade" then
+									WhichOne2 = Data.FadeModeAngle
+								elseif Throwtype == "Bullet" then
+									WhichOne2 = Data.BulletModeAngle
+								else
+									WhichOne2 = Data.Angle
+								end
+								if Highestpwrmode then
+									Initial = 95
+								else
+									if AutoPowa then
+										if pow then
+										Initial = pow
+									else
+										 Initial = 95
+									end
+								else
+									Initial = Data.NormalPower
+								end
+							end
+								local toLaunchAnlge;
+								if Highestpwrmode then
+									if AutoAngie then
+										toLaunchAnlge = HighSpeedLowAngleCalcs(FF2Grav, Initial)
+									else
+										toLaunchAnlge = math.rad(WhichOne2)
+									end
+								else
+									if AutoAngie then
+										if Throwtype == "Fade" then
+											toLaunchAnlge = math.rad(75)
+										elseif Throwtype == "Bullet" then
+											toLaunchAnlge = clampnum(HighSpeedLowAngleCalcs(FF2Grav, Initial), 0, 0.296706)
+										else
+											toLaunchAnlge = clampnum(calculateLaunchAngle(FF2Grav, Initial), 0, 0.975)
+										end
+									else
+										toLaunchAnlge = math.rad(WhichOne2)
+									end
+								end
+								local TOF = GetTimeOfFlightProjectile(Initial, toLaunchAnlge, FF2Grav)
+								local YesEnd;
+								if string.find(ClosestPlr.name, "bot 1") or string.find(ClosestPlr.name, "bot 3") then
+										YesEnd = BotEstimatedVel(TOF, ClosestPlr)
+								elseif not string.find(ClosestPlr.name, "bot 1") or not string.find(ClosestPlr.name, "bot 3") then
+										YesEnd = GetTargetPositionForWR(TOF, ClosestPlr)
+								end
+								local PowerSir;
+
+								vel, toThrowToDirection, pow = OverallVelocityNeededToReachAPosition(toLaunchAnlge, start, YesEnd, Vector3.new(0,-FF2Grav,0), TOF)  
+								if AutoPowa then
+									if Throwtype == "Fade" then
+										PowerSir = 95
+									elseif Throwtype == "Bullet" then
+										PowerSir = clampnum(pow, 90, 95)
+									else
+										PowerSir = pow
+									end
+								else
+									PowerSir = Data.NormalPower
+								end
+								local neworigin = start + (ThrowingTab.Direction * 5)
+
+								local RemoteEvent = Football.Handle:FindFirstChild("RemoteEvent")
+								if RemoteEvent then
+									local ThrowAnimation = Char.Humanoid:LoadAnimation(game:GetService("ReplicatedStorage").Animations.Throw)
+									ThrowAnimation.Name = "Throw"
+									ThrowAnimation:Play()
+									RemoteEvent:fireServer("Clicked", start, neworigin + ThrowingTab.Direction * 10000, (game.PlaceId == 8206123457 and PowerSir) or 95, PowerSir)
+								else
+									
+								end 
+							else
+							
+							end
+						else
+						  
+						end
+					else
+				  
+					end
+				end
+			end
+		end)
+
 
 		
 	local TargetPosition;
 	local PredictedRoute
-	local start = Player.Character.Head.Position
-
-
-	local n;
-	n = hookmetamethod(game, "__namecall", function(self, ...)
-		local a = {...}
-		local nm = getnamecallmethod()
-
-		if a[1] == "Clicked" and state then
-			local ArgsNew = {"Clicked", start, start + ThrowingTab.Direction * 10000, (game.PlaceId == 8206123457  and ThrowingTab.Power) or a[4], ThrowingTab.Power}
-			return n(self, unpack(ArgsNew))
-		end
-		return n(self, ...)
-	end)
-
-
-
-	--// Connection to make it Click to Throw //--
 	
+	--// Connection to make it Click to Throw //--
+	Char.ChildAdded:Connect(function(v)
+		if v.Name == "Football" and Char then
+			local children = v:GetChildren()
+			if children.Name == "Handle" then
+				local descendants = children:GetChildren()
+				if descendants.Name == "LocalScript" then
+					descendants:Destroy()
+				end
+			end
+		end
+	end)
 	local autopmode = false
 	local Highestpwrmode = false
 	--// One big function that holds function for if conditions //--
@@ -1897,14 +2149,13 @@ local Highestpwrmode = false
 				else
 					POWAA = Data.NormalPower
 				end         
-				ThrowingTab.Power = POWAA
 				if isVector3Valid(direction) and isVector3Valid(TargetPosition) then
 					ThrowingTab.Direction = direction
 					
 					local startAdjusted = Start + (ThrowingTab.Direction * 5) -- // this is the beginning offsets on the server // --
 					
 			  
-					local curve0, curve1, cf0, cf1 = beamProjectile(Vector3.new(0, -FF2Grav, 0), ThrowingTab.Power * ThrowingTab.Direction, Start + (ThrowingTab.Direction * 5), TOF)
+					local curve0, curve1, cf0, cf1 = beamProjectile(Vector3.new(0, -FF2Grav, 0), POWAA * ThrowingTab.Direction, Start + (ThrowingTab.Direction * 5), TOF)
 					
 					beam.CurveSize0 = curve0
 					beam.CurveSize1 = curve1
