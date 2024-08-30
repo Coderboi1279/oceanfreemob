@@ -1,3 +1,5 @@
+	local uis = game:GetService("UserInputService")
+
 		local cx = game:GetService("ContentProvider")
 local PAsync = cx.PreloadAsync
 local lp = game:GetService("Players").LocalPlayer
